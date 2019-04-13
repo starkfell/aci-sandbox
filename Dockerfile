@@ -1,18 +1,22 @@
 # Pulling Image from https://hub.docker.com/r/matrixdotorg/synapse/
 
-FROM matrixdotorg/synapse:latest
+FROM ubuntu:xenial
 
 # Updating packages list and installing Azure CLI prerequisite packages.
-# RUN apt-get update && apt-get install -y \
-# net-tools \
-# vim \
-# jq \
-# get \
-# curl \
-# openssh-client \
-# apt-transport-https \
-# lsb-release \
-# --no-install-recommends
+RUN apt-get update && apt-get install -y \
+net-tools \
+vim \
+jq \
+wget \
+curl \
+openssh-client \
+apt-transport-https \
+lsb-release \
+--no-install-recommends
+
+RUN wget -qO - https://matrix.org/packages/debian/repo-key.asc | apt-key add add-apt-repository https://matrix.org/packages/debian/
+RUN apt-get install matrix-synapse -y
+
 
 WORKDIR /opt
 EXPOSE 80
