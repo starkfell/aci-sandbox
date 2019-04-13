@@ -25,8 +25,6 @@ libjpeg-dev \
 libxslt1-dev \
 --no-install-recommends
 
-RUN wget -qO - https://matrix.org/packages/debian/repo-key.asc | apt-key add add-apt-repository https://matrix.org/packages/debian/
-
 WORKDIR /opt
 EXPOSE 80
 EXPOSE 443
