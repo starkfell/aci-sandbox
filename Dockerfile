@@ -14,7 +14,7 @@ apt-transport-https \
 lsb-release \
 --no-install-recommends
 
-WORKDIR /portal
+WORKDIR /opt
 EXPOSE 80
 EXPOSE 443
 EXPOSE 8448
