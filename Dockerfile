@@ -3,16 +3,16 @@
 FROM matrixdotorg/synapse:latest
 
 # Updating packages list and installing Azure CLI prerequisite packages.
-RUN apt-get update && apt-get install -y \
-net-tools \
-vim \
-jq \
-get \
-curl \
-openssh-client \
-apt-transport-https \
-lsb-release \
---no-install-recommends
+# RUN apt-get update && apt-get install -y \
+# net-tools \
+# vim \
+# jq \
+# get \
+# curl \
+# openssh-client \
+# apt-transport-https \
+# lsb-release \
+# --no-install-recommends
 
 WORKDIR /opt
 EXPOSE 80
