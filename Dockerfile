@@ -10,13 +10,22 @@ jq \
 wget \
 curl \
 openssh-client \
+nginx \
 apt-transport-https \
 lsb-release \
+build-essential \
+python2.7-dev \
+libffi-dev \
+python-pip \
+python-setuptools \
+sqlite3 \
+libssl-dev \
+python-virtualenv \
+libjpeg-dev \
+libxslt1-dev \
 --no-install-recommends
 
 RUN wget -qO - https://matrix.org/packages/debian/repo-key.asc | apt-key add add-apt-repository https://matrix.org/packages/debian/
-RUN apt-get install matrix-synapse -y
-
 
 WORKDIR /opt
 EXPOSE 80
