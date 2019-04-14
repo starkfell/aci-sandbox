@@ -1,8 +1,7 @@
-# Pulling Image from https://hub.docker.com/r/matrixdotorg/synapse/
-
+# Pulling Ubuntu Image from Docker Hub
 FROM ubuntu:xenial
 
-# Updating packages list and installing Azure CLI prerequisite packages.
+# Updating packages list and installing the prerequisite packages.
 RUN apt-get update && apt-get install -y \
 net-tools \
 vim \
@@ -24,6 +23,23 @@ python-virtualenv \
 libjpeg-dev \
 libxslt1-dev \
 --no-install-recommends
+
+# Installing virtualenv and upgrading pip.
+RUN /usr/bin/easy_install virtualenv
+RUN virtualenv -p python2.7 ~/.synapse
+RUN source ~/.synapse/bin/activate
+RUN pip2.7 install --upgrade pip && pip2.7 install --upgrade setuptools
+
+RUN pip2.7 install https://github.com/matrix-org/synapse/tarball/master
+
+RUN python -m synapse.app.homeserver \
+--server-name aci-sandbox.westeurope.azurecontainer.io \
+--config-path homeserver.yaml \
+--generate-config \
+--report-stats=no
+
+RUN synctl start
+
 
 WORKDIR /opt
 EXPOSE 80
