@@ -24,14 +24,16 @@ libjpeg-dev \
 libxslt1-dev \
 --no-install-recommends
 
-# Installing virtualenv and upgrading pip
+# Installing virtualenv
 RUN /usr/bin/easy_install virtualenv
 RUN virtualenv -p python2.7 ~/.synapse
-RUN bin/bash -c "source ~/.synapse/bin/activate"
-RUN pip2.7 install --upgrade pip && pip2.7 install --upgrade setuptools
 
-# Installing Matrix Synapse Home Server
-RUN pip2.7 install https://github.com/matrix-org/synapse/tarball/master
+ # Upgrading pip and installing Matrix Synapse Home Server
+RUN bin/bash -c \
+"source ~/.synapse/bin/activate && \
+pip2.7 install --upgrade pip && \
+pip2.7 install --upgrade setuptools && \
+pip2.7 install https://github.com/matrix-org/synapse/tarball/master"
 
 # Generating the Initial Configuration
 RUN python -m synapse.app.homeserver \
