@@ -28,22 +28,18 @@ libxslt1-dev \
 RUN /usr/bin/easy_install virtualenv
 RUN virtualenv -p python2.7 ~/.synapse
 
- # Upgrading pip and installing Matrix Synapse Home Server
+ # Upgrading pip, installing Matrix Synapse Home Server, and running the Initial Configuration
 RUN bin/bash -c \
 "source ~/.synapse/bin/activate && \
 pip2.7 install --upgrade pip && \
 pip2.7 install --upgrade setuptools && \
-pip2.7 install https://github.com/matrix-org/synapse/tarball/master"
-
-# Generating the Initial Configuration
-RUN python -m synapse.app.homeserver \
+pip2.7 install https://github.com/matrix-org/synapse/tarball/master && \
+python -m synapse.app.homeserver \
 --server-name aci-sandbox.westeurope.azurecontainer.io \
 --config-path homeserver.yaml \
 --generate-config \
---report-stats=no
-
-# Starting the Home Server
-RUN synctl start
+--report-stats=no && \
+synctl start"
 
 WORKDIR /opt
 EXPOSE 80
