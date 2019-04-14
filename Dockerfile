@@ -11,7 +11,6 @@ wget \
 curl \
 openssh-client \
 nginx \
-apt-transport-https \
 lsb-release \
 --no-install-recommends
 
