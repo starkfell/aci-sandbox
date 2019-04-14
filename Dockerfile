@@ -15,7 +15,7 @@ lsb-release \
 snapd \
 --no-install-recommends
 
-RUN nap install rocketchat-server && \
+RUN snap install rocketchat-server && \
 snap set rocketchat-server caddy-url=https://aci-sandbox.westeurope.azurecontainer.io && \
 snap set rocketchat-server caddy=enable && \
 snap set rocketchat-server https=enable && \
