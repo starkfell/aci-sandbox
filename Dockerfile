@@ -1,8 +1,9 @@
 # Pulling Ubuntu Image from Docker Hub
-FROM ubuntu:bionic
+# FROM ubuntu:bionic
+FROM snapcore/snapcraft:latest
 
 # Updating packages list and installing the prerequisite packages
-RUN apt-get update && apt-get install -y \
+RUN apt-get install -y \
 net-tools \
 vim \
 jq \
@@ -12,7 +13,6 @@ openssh-client \
 nginx \
 apt-transport-https \
 lsb-release \
-snapd \
 --no-install-recommends
 
 
