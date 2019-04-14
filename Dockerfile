@@ -1,5 +1,5 @@
 # Pulling Ubuntu Image from Docker Hub
-FROM ubuntu:xenial
+FROM ubuntu:bionic
 
 # Updating packages list and installing the prerequisite packages
 RUN apt-get update && apt-get install -y \
@@ -12,45 +12,17 @@ openssh-client \
 nginx \
 apt-transport-https \
 lsb-release \
-build-essential \
-python2.7-dev \
-libffi-dev \
-python-pip \
-python-setuptools \
-sqlite3 \
-libssl-dev \
-python-virtualenv \
-libjpeg-dev \
-libxslt1-dev \
+snapd \
 --no-install-recommends
 
-# Installing virtualenv
-RUN /usr/bin/easy_install virtualenv
-RUN virtualenv -p python2.7 ~/.synapse
-
- # Upgrading pip, installing Matrix Synapse Home Server, and running the Initial Configuration
-RUN bin/bash -c \
-"source ~/.synapse/bin/activate && \
-pip2.7 install --upgrade pip && \
-pip2.7 install --upgrade setuptools && \
-pip2.7 install https://github.com/matrix-org/synapse/tarball/master && \
-python -m synapse.app.homeserver \
---server-name aci-sandbox.westeurope.azurecontainer.io \
---config-path homeserver.yaml \
---generate-config \
---report-stats=no && \
-synctl start"
+RUN nap install rocketchat-server && \
+snap set rocketchat-server caddy-url=https://aci-sandbox.westeurope.azurecontainer.io && \
+snap set rocketchat-server caddy=enable && \
+snap set rocketchat-server https=enable && \
+rocketchat-server.initcaddy
 
 WORKDIR /opt
 EXPOSE 80
 EXPOSE 443
-EXPOSE 8448
-
-# ENV SYNAPSE_SERVER_NAME=my.matrix.host
-ENV POSTGRES_USER=synapse
-ENV POSTGRES_PASSWORD=synapse
-ENV SYNAPSE_REPORT_STATS=no
-ENV SYNAPSE_ENABLE_REGISTRATION=yes
-ENV SYNAPSE_LOG_LEVEL=INFO
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
