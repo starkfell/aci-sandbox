@@ -1,5 +1,5 @@
 # Pulling Ubuntu Image from Docker Hub
-# FROM ubuntu:xenial
+FROM ubuntu:xenial
 
 # Updating packages list and installing the prerequisite packages
 RUN apt-get update && apt-get install -y \
