@@ -3,7 +3,7 @@
 FROM snapcore/snapcraft:latest
 
 # Updating packages list and installing the prerequisite packages
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
 net-tools \
 vim \
 jq \
