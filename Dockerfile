@@ -1,6 +1,5 @@
 # Pulling Ubuntu Image from Docker Hub
-# FROM ubuntu:bionic
-FROM snapcore/snapcraft:latest
+# FROM ubuntu:xenial
 
 # Updating packages list and installing the prerequisite packages
 RUN apt-get update && apt-get install -y \
@@ -14,12 +13,18 @@ nginx \
 lsb-release \
 --no-install-recommends
 
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+RUN echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.6 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y build-essential mongodb-org nodejs npm graphicsmagick
+RUN npm install -g inherits n && n 8.11.3
 
-#RUN snap install rocketchat-server && \
-#snap set rocketchat-server caddy-url=https://aci-sandbox.westeurope.azurecontainer.io && \
-#snap set rocketchat-server caddy=enable && \
-#snap set rocketchat-server https=enable && \
-#rocketchat-server.initcaddy
+RUN curl -L https://releases.rocket.chat/latest/download -o /tmp/rocket.chat.tgz
+RUN tar -xzf /tmp/rocket.chat.tgz -C /tmp
+RUN cd /tmp/bundle/programs/server && npm install
+RUN mv /tmp/bundle /opt/Rocket.Chat
+
+
 
 WORKDIR /opt
 EXPOSE 80
