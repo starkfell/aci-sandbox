@@ -2,17 +2,13 @@
 FROM alpine:latest
 
 # Updating packages list and installing the prerequisite packages
-RUN apt-get update && apt-get install -y \
+RUN apk update && apk add \
 net-tools \
 vim \
 jq \
 wget \
 curl \
-openssh-client \
-nginx \
-lsb-release \
-apt-transport-https \
---no-install-recommends
+nginx
 
 WORKDIR /opt
 EXPOSE 80
